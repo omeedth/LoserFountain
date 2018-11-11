@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Loser Fountain</title>
+    <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+  </head>
+  <body>
+
+      <!-- CSS -->
+
+      <style>
+
+        body,html {
+          padding: 0;
+          margin: 0;
+          width: 100%;
+          height: 100%;
+        }
+
+        #wrapper {
+          width: 100%;
+          height: 100%;
+
+        }
+
+        h1 {
+        left: 0;
+        line-height: 200px;
+        margin: auto;
+        margin-top: -150px;
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        font-style: oblique;
+        font-size: 500%;
+        font: sans-serif;
+        }
+        h2 {
+        left: 0;
+        line-height: 200px;
+        margin: auto;
+        margin-top: -75px;
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        font-style: oblique;
+        font: sans-serif;
+        font-size: 150%;
+        }
+        h3 {
+        left: 0;
+        line-height: 200px;
+        margin: auto;
+        margin-top: -25px;
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        font-style: oblique;
+        font: sans-serif;
+        font-size: 100%;
+        }
+      body {
+      background-image: url("https://blog.bufferapp.com/wp-content/uploads/2016/06/giphy.gif");
+      background-position: center center;
+      background-size: 100% 100%;
+      }
+
+      </style>
+
+      <!-- END CSS -->
+
+      <!-- HTML -->
+      <div id="wrapper">
+      <center>
+        <h1>
+          Loser Fountain </br>
+        </h1>
+        <h2>
+          The greatest place to vote and create stories with others!</br>
+        </h2>
+        <h3>
+          <a href="lostFountain.html" style="color:white">
+            Click to Continue
+          </a></h3>
+      </center>
+      <div class=”body” title=”hi”></div>
+
+
+
+      </div>
+
+    <!-- Javascript -->
+
+
+    <script>
+    var xhr=new XMLHttpRequest();
+    var votes = new XMLHttpRequest();
+    var timeCheck = new XMLHttpRequest();
+    function update(){
+        var xhr=new XMLHttpRequest();
+        var votes = new XMLHttpRequest();
+        var timeCheck = new XMLHttpRequest();
+        xhr.open("GET","madlib.txt");
+        xhr.onload=function(){
+            console.log(xhr.responseText);
+        }
+        xhr.send();
+
+        votes.open("GET","votes.txt");
+        votes.onload=function(){
+            console.log(votes.responseText);
+        }
+        votes.send();
+
+        timeCheck.open("GET","timer.txt");
+        timeCheck.onload=function(){
+            console.log(timeCheck.responseText);
+        }
+        timeCheck.send();
+    }
+
+    window.setInterval(function(){
+      update();
+    }, 6000);
+    </script>
+
+    <!-- END Javascript -->
+
+  </body>
+</html>

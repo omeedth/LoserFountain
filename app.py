@@ -1,4 +1,4 @@
-from flask import Flask, request, send_from_directory
+from flask import Flask, request, send_from_directory, redirect
 from twilio.twiml.messaging_response import MessagingResponse
 from flask import render_template
 import time
@@ -56,7 +56,7 @@ def get_time():
             if PopularWord != "":
                 print("Most popular word: " + PopularWord)
                 text = open("madlib.txt","a")
-                text.write(PopularWord)
+                text.write(PopularWord + " ")
                 text.close()
             elapsed = 0
             words.clear()
