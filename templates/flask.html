@@ -13,7 +13,7 @@
       body,html {
         padding: 0;
         margin: 0;
-        width: 100%
+        width: 100%;
         height: 100%;
       }
 
@@ -32,6 +32,7 @@
     <div id="wrapper">
 
       <p>Flask App</p>
+      <!-- <button onclick="alert('fromMessage: ' + )" /> -->
 
     </div>
 
@@ -39,9 +40,36 @@
 
     <!-- Javascript -->
 
+    <script src="https://unpkg.com/onedb-client/dist/onedb-client.min.js"></script>
+
+    <script>
+      var onedb = new OneDBClient({
+        hosts: {
+          primary: {location: 'https://one-db.datafire.io'},
+        }
+      });
+    </script>
+
     <script>
 
+      onedb.list('status', 'status', {sort: 'info.created:descending'})
+          .then(function(response) {
+              var el = document.getElementById('Statuses');
+              for (var i = 0; i < response.items.length; ++i) {
+                  el.innerHTML += getHTMLForStatusUpdate(response.items[i])
+              }
+          });
+      function getHTMLForStatusUpdate(statusUpdate) {
+          var info = statusUpdate.$.info;
+          var html = '<h4>' + info.created_by + '</h4>';
+          html += '<i>wrote on ' + new Date(info.created).toDateString() + '</i>';
+          var statusElement = document.createElement('p');
+          statusElement.textContent = statusUpdate.status;
+          html += statusElement.outerHTML;
+          return html;
+      }
 
+      //var someJavaScriptVar = '{{ msg }}';
 
     </script>
 
