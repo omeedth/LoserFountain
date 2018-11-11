@@ -94,12 +94,34 @@
 
     <script>
     var xhr=new XMLHttpRequest();
-    xhr.open("GET","../madlib.txt");
-    xhr.onload=function(){
-        console.log(xhr.responseText);
+    var votes = new XMLHttpRequest();
+    var timeCheck = new XMLHttpRequest();
+    function update(){
+        var xhr=new XMLHttpRequest();
+        var votes = new XMLHttpRequest();
+        var timeCheck = new XMLHttpRequest();
+        xhr.open("GET","../madlib.txt");
+        xhr.onload=function(){
+            console.log(xhr.responseText);
+        }
+        xhr.send();
+
+        votes.open("GET","../votes.txt");
+        votes.onload=function(){
+            console.log(votes.responseText);
+        }
+        votes.send();
+
+        timeCheck.open("GET","../timer.txt");
+        timeCheck.onload=function(){
+            console.log(timeCheck.responseText);
+        }
+        timeCheck.send();
     }
-    xhr.send();
-    console.log(xhr.responseText)
+
+    window.setInterval(function(){
+      update();
+    }, 6000);
     </script>
 
     <!-- END Javascript -->

@@ -42,6 +42,10 @@ def get_time():
         if elapsed > 1:
             elapsed = 0
             counter += 1
+            open("timer.txt","w").close()
+            text = open("timer.txt","w")
+            text.write(str(counter))
+            text.close()
             # timing += 1
             print("Time: " + str(counter))
             # post_messages("timer",counter) # Timer Variable
@@ -153,6 +157,10 @@ def post_madlib():
 @app.route("/votes.txt")
 def post_votes():
     return send_from_directory('','votes.txt')
+
+@app.route("/timer.txt")
+def post_timer():
+    return send_from_directory('','timer.txt')
 
 # @app.route("/send",methods=["POST"])
 # def post_messages(key,val):
