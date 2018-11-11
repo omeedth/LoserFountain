@@ -14,7 +14,7 @@ words = {}
 # start = time.time()
 # print(start)
 elapsed = 0
-wait = 30
+wait = 20
 thread = None
 
 def get_time():
@@ -93,7 +93,8 @@ def getPopularWord():
     for key,val in words.items():
         if val == max:
             tied.append(key)
-    ret = random.choice(tied)
+    if(len(tied) > 0):
+        ret = random.choice(tied)
     print()
     return ret
 
