@@ -3,6 +3,7 @@ from twilio.twiml.messaging_response import MessagingResponse
 from flask import render_template
 import time
 from threading import Thread
+import random
 
 phone_nums = []
 
@@ -13,7 +14,7 @@ words = {}
 # start = time.time()
 # print(start)
 elapsed = 0
-wait = 10
+wait = 30
 thread = None
 
 def get_time():
@@ -76,10 +77,15 @@ def get_time():
 def getPopularWord():
     max = 0
     ret = ""
+    tied = []
     for key,val in words.items():
         if val >= max:
-            ret = key
+            max = val
         print(str(key) + ":" + str(val),end="")
+    for key,val in words.items():
+        if val == max:
+            tied.append(key)
+    ret = random.choice(tied)
     print()
     return ret
 
