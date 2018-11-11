@@ -4,45 +4,90 @@ from flask import render_template
 import time
 from threading import Thread
 
+phone_nums = []
+
 app = Flask(__name__)
 
 words = {}
+
 # start = time.time()
 # print(start)
 elapsed = 0
-wait = 5
+wait = 10
 thread = None
-
-def getPopularWord():
-    for i in len(words):
-        #print(pair,end="")
-    print()
-    return ""
 
 def get_time():
     elapsed = 0
-    # counter = 0
+    counter = 0
+    timing = 0
     running = True
+    start = time.time()
     while running:
-        start = time.time()
+        # start = time.time()
         elapsed += (time.time() - start)
         start = time.time()
-        # if counter % 1000:
-        #     print("Time: " + str(elapsed))
-        if elapsed > wait:
-            text = open("madlib.txt","w")
-            text.write(getPopularWord())
-            text.close()
+
+        # if counter == 1:
+        #     print("1 second")
+
+        # if not url_ok(url):
+        #     running = False
+        #     break
+
+        # if counter >= 3:
+        #     running = False
+        #     break
+
+        if elapsed > 1:
+            elapsed = 0
+            counter += 1
+            # timing += 1
+            print("Time: " + str(counter))
+
+        if counter >= wait:
+            PopularWord = getPopularWord()
+            if PopularWord != "":
+                print("Most popular word: " + PopularWord)
+                text = open("madlib.txt","a")
+                text.write(getPopularWord())
+                text.close()
             elapsed = 0
             words.clear()
             print("Cleared Dictionary: " + str(words))
-        # counter += 1
+            phone_nums.clear()
+            counter += 1
 
-    thread.join()
+            votes = open("votes.txt","r")
+            contents = votes.read()
+            tokens = contents.split(",")[:-1]
+            votes.close()
+
+            print("Voted Words: " + str(tokens))
+
+            votes = open("votes.txt","w")
+            votes.write("")
+            votes.close()
+
+            counter = 0
+            # timing = 0
+    # thread.join();
+    # quit()
+
+def getPopularWord():
+    max = 0
+    ret = ""
+    for key,val in words.items():
+        if val >= max:
+            ret = key
+        print(str(key) + ":" + str(val),end="")
+    print()
+    return ret
 
 @app.route("/twilio", methods=["GET", "POST"])
 def replyRead():
     """Respond to incoming messages with a friendly SMS."""
+
+    # phone_nums = []
 
     print("twilio method called...")
 
@@ -54,7 +99,23 @@ def replyRead():
     fromNumber = request.values.get("From", None)
     fromMessage = request.values.get("Body", None);
 
-    fromMessage = fromMessage.lower()
+    # numbers = open("nums.txt","a")
+    # numbers.write(fromNumber)
+    # numbers.close()
+
+    # phone_nums = numbers.split(" ")
+
+    if fromNumber in phone_nums:
+        print(phone_nums)
+        return ""
+
+    phone_nums.append(fromNumber)
+
+    fromMessage = str(fromMessage).split(" ")[0].lower()
+
+    votes = open("votes.txt","a")
+    votes.write(fromMessage + ",")
+    votes.close()
 
     # Works
     # text = open("madlib.txt","w")
@@ -72,7 +133,8 @@ def replyRead():
 
     print(words)
 
-    return str(resp)
+    return ""
+    # return str(resp)
 
 @app.route("/", methods=["GET"])
 def run_site():
