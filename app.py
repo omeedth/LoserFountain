@@ -50,7 +50,7 @@ def get_time():
             if PopularWord != "":
                 print("Most popular word: " + PopularWord)
                 text = open("madlib.txt","a")
-                text.write(getPopularWord())
+                text.write(PopularWord)
                 text.close()
             elapsed = 0
             words.clear()
