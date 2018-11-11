@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, send_from_directory
 from twilio.twiml.messaging_response import MessagingResponse
 from flask import render_template
 import time
@@ -44,9 +44,11 @@ def get_time():
             counter += 1
             # timing += 1
             print("Time: " + str(counter))
+            # post_messages("timer",counter) # Timer Variable
 
         if counter >= wait:
             PopularWord = getPopularWord()
+            # post_messages("PopularWord",PopularWord) # Posts Chosen Word
             if PopularWord != "":
                 print("Most popular word: " + PopularWord)
                 text = open("madlib.txt","a")
@@ -62,6 +64,8 @@ def get_time():
             contents = votes.read()
             tokens = contents.split(",")[:-1]
             votes.close()
+
+            # post_messages("votes",tokens) # Posts Chosen Word
 
             print("Voted Words: " + str(tokens))
 
@@ -141,6 +145,25 @@ def replyRead():
 
     return ""
     # return str(resp)
+
+@app.route("/madlib.txt")
+def post_madlib():
+    return send_from_directory('','madlib.txt')
+
+@app.route("/votes.txt")
+def post_votes():
+    return send_from_directory('','votes.txt')
+
+# @app.route("/send",methods=["POST"])
+# def post_messages(key,val):
+#     if request.method == 'POST':
+#         if(key == "counter"):
+#             return render_template("flask.html",timer=val)
+#         elif(key == "PopularWord"):
+#             return render_template("flask.html",word=val)
+#         elif(key == "votes"):
+#             return render_template("flask.html",votes=val)
+        # return render_template("flask.html")
 
 @app.route("/", methods=["GET"])
 def run_site():
