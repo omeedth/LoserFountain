@@ -14,7 +14,7 @@ words = {}
 # start = time.time()
 # print(start)
 elapsed = 0
-wait = 20
+wait = 30
 thread = None
 
 def get_time():
@@ -56,7 +56,10 @@ def get_time():
             if PopularWord != "":
                 print("Most popular word: " + PopularWord)
                 text = open("madlib.txt","a")
-                text.write(PopularWord + " ")
+                if(PopularWord == "." or PopularWord == "," or PopularWord == "?" or PopularWord == "!"):
+                    text.write(PopularWord)
+                else:
+                    text.write(" " + PopularWord)
                 text.close()
             elapsed = 0
             words.clear()
@@ -138,7 +141,7 @@ def replyRead():
     # text.close()
 
     # Add a message
-    resp.message(fromMessage)
+    resp.message("Thanks for your submission!")
 
     # Add to database
     if fromMessage in words:
@@ -148,8 +151,8 @@ def replyRead():
 
     print(words)
 
-    return ""
-    # return str(resp)
+    #return "Thanks for your submission!"
+    return str(resp)
 
 @app.route("/madlib.txt")
 def post_madlib():
